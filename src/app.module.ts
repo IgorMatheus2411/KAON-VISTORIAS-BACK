@@ -1,10 +1,19 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { UsersModule } from './modules/users/users.module';
+import { VistoriasModule } from './modules/vistorias/vistorias.module';
+import { AmbientesModule } from './modules/ambientes/ambientes.module';
+import { SubAmbientesModule } from './modules/sub-ambientes/sub-ambientes.module';
+import { FotosModule } from './modules/fotos/fotos.module';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    UsersModule,
+    VistoriasModule,
+    AmbientesModule,
+    SubAmbientesModule,
+    FotosModule,
+  ],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
