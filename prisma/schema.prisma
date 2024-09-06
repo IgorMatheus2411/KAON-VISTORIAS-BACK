@@ -10,17 +10,16 @@ datasource db {
 // PRISMA KAONVISTORIAS
 
 model User {
-  id          String      @id @default(uuid())
-  name        String
-  email       String      @unique
-  password    String
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-  vistorias   Vistorias[] // Relacionamento um-para-muitos com Vistorias
+  id        String     @id @default(uuid())
+  name      String
+  email     String     @unique
+  password  String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  vistorias Vistoria[] // Relacionamento um-para-muitos com Vistorias
 }
 
-
-model Vistorias {
+model Vistoria {
   id               String        @id @default(uuid())
   area_vistoriada  String
   cliente          String
@@ -28,42 +27,43 @@ model Vistorias {
   data_laudo       DateTime
   endereco         String
   finalizada       Boolean
-  lista_ambiente   String
   locador          String
   locatario        String
   mobiliado        String
-  sub_ambientes    String
+  sub_ambientes    SubAmbiente[]
   tipo_imovel      String
   tipo_vistoria    String
-  ambientes        Ambiente[] 
-  userId           String        
+  ambientes        Ambiente[]
+  userId           String
   user             User          @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Ambiente {
-  id             String        @id @default(uuid())
-  nome           String
-  vistoriaId     String
-  vistoria       Vistorias     @relation(fields: [vistoriaId], references: [id], onDelete: Cascade)
-  subAmbientes   SubAmbiente[] 
-  fotos          Foto[]       
-  descricao      String?       // Descrição opcional do ambiente
+  id           String        @id @default(uuid())
+  nome         String
+  vistoriaId   String
+  vistoria     Vistoria      @relation(fields: [vistoriaId], references: [id], onDelete: Cascade)
+  subAmbientes SubAmbiente[]
+  fotos        Foto[]
+  descricao    String? // Descrição opcional do ambiente
 }
 
 model SubAmbiente {
-  id             String        @id @default(uuid())
-  nome           String
-  ambienteId     String
-  ambiente       Ambiente      @relation(fields: [ambienteId], references: [id], onDelete: Cascade)
-  descricao      String?        // Descrição do subambiente
-  fotos          Foto[]        
+  id         String   @id @default(uuid())
+  nome       String
+  ambienteId String
+  ambiente   Ambiente @relation(fields: [ambienteId], references: [id], onDelete: Cascade)
+  vistoriaId String
+  vistoria   Vistoria @relation(fields: [vistoriaId], references: [id], onDelete: Cascade)
+  descricao  String? // Descrição do subambiente
+  fotos      Foto[]
 }
 
 model Foto {
-  id             String        @id @default(uuid())
-  url            String        // URL da foto no supabase
-  ambienteId     String?          // Relacionamento opcional com Ambientes
-  subAmbienteId  String?          // Relacionamento opcional com SubAmbientes
-  ambiente       Ambiente?     @relation(fields: [ambienteId], references: [id], onDelete: Cascade)
-  subAmbiente    SubAmbiente?  @relation(fields: [subAmbienteId], references: [id], onDelete: Cascade)
+  id            String       @id @default(uuid())
+  url           String // URL da foto no supabase
+  ambienteId    String? // Relacionamento opcional com Ambientes
+  subAmbienteId String? // Relacionamento opcional com SubAmbientes
+  ambiente      Ambiente?    @relation(fields: [ambienteId], references: [id], onDelete: Cascade)
+  subAmbiente   SubAmbiente? @relation(fields: [subAmbienteId], references: [id], onDelete: Cascade)
 }
