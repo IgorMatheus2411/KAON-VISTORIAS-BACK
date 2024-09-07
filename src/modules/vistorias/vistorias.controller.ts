@@ -1,14 +1,12 @@
-// import { Body, Controller, Post } from '@nestjs/common';
-// import { VistoriasService } from './vistorias.service';
-// import { VistoriaDTO } from './vistoria.dto';
-// import { Vistoria } from '@prisma/client';
+import { Body, Controller, Post } from '@nestjs/common';
+import { VistoriaService } from './vistorias.service';
+import { VistoriaDTO } from './vistoria.dto';
+@Controller('vistorias')
+export class VistoriasController {
+  constructor(private readonly vistoriaService: VistoriaService) {}
 
-// @Controller('vistorias')
-// export class VistoriasController {
-//   constructor(private readonly vistoriasService: VistoriasService) {}
-
-//   @Post()
-//   async create(@Body() data: VistoriaDTO): Promise<Vistoria> {
-//     return this.vistoriasService.createVistoria(data);
-//   }
-// }
+  @Post()
+  async create(@Body() data: VistoriaDTO) {
+    return this.vistoriaService.createVistoria(data);
+  }
+}

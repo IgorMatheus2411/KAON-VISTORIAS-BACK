@@ -34,8 +34,8 @@ model Vistoria {
   tipo_imovel      String
   tipo_vistoria    String
   ambientes        Ambiente[]
-  userId           String
-  user             User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId           String?
+  user             User?         @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Ambiente {

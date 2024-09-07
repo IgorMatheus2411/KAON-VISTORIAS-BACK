@@ -1,5 +1,3 @@
-import { Ambiente, SubAmbiente } from '@prisma/client';
-
 export type VistoriaDTO = {
   id?: string;
   area_vistoriada: string;
@@ -13,7 +11,6 @@ export type VistoriaDTO = {
   mobiliado: string;
   tipo_imovel: string;
   tipo_vistoria: string;
-  userId: string; // Usado para conectar o usuário existente
-  sub_ambientes: SubAmbiente[];
-  ambientes: Ambiente[];
+  userId: string;
+  // Não inclui sub_ambientes e ambientes aqui, pois serão gerenciados em APIs separadas
 };
