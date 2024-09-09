@@ -39,7 +39,7 @@ export class AmbienteService {
     });
 
     if (!ambienteExists) {
-      throw new Error('Vistoria não existe!');
+      throw new Error('Ambiente não existe!');
     }
 
     return await this.prisma.ambiente.update({
