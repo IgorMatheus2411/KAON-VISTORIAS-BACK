@@ -18,4 +18,45 @@ export class VistoriaService {
       throw new Error('Error creating vistoria');
     }
   }
+
+  async findAll() {
+    return this.prisma.vistoria.findMany();
+  }
+
+  async update(id: string, data: VistoriaDTO) {
+    const vistoriaExists = await this.prisma.vistoria.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!vistoriaExists) {
+      throw new Error('Vistoria não existe!');
+    }
+
+    return await this.prisma.vistoria.update({
+      data,
+      where: {
+        id,
+      },
+    });
+  }
+
+  async delete(id: string) {
+    const vistoriaExists = await this.prisma.vistoria.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!vistoriaExists) {
+      throw new Error('Vistoria não existe!');
+    }
+
+    return await this.prisma.vistoria.delete({
+      where: {
+        id,
+      },
+    });
+  }
 }
