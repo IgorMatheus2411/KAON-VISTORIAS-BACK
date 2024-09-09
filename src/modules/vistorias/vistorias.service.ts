@@ -20,7 +20,12 @@ export class VistoriaService {
   }
 
   async findAll() {
-    return this.prisma.vistoria.findMany();
+    return this.prisma.vistoria.findMany({
+      include: {
+        ambientes: true,
+        sub_ambientes: true,
+      },
+    });
   }
 
   async update(id: string, data: VistoriaDTO) {

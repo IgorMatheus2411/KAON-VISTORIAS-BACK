@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
-import { AmbientesService } from './ambientes.service';
+import { AmbienteService } from './ambientes.service';
 import { AmbientesController } from './ambientes.controller';
+import { PrismaService } from 'src/database/PrismaService';
 
-Module({
+@Module({
   controllers: [AmbientesController],
-  providers: [AmbientesService],
-});
+  providers: [AmbienteService, PrismaService],
+})
 export class AmbientesModule {}
