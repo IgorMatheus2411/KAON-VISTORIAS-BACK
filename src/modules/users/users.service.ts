@@ -84,6 +84,18 @@ export class UsersService {
     });
   }
 
+  async findAll() {
+    return this.prisma.user.findMany({
+      include: {
+        vistorias: {
+          select: {
+            cliente: true, // Puxa apenas o campo 'cliente' da vistoria
+          },
+        },
+      },
+    });
+  }
+
   async updateUser(id: string, data: UserDTO) {
     const userExists = await this.prisma.user.findUnique({
       where: {

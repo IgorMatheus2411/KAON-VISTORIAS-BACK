@@ -24,6 +24,11 @@ export class UsersController {
     return this.userService.findOne(id);
   }
 
+  @Get()
+  async findAll() {
+    return this.userService.findAll();
+  }
+
   // http://localhost:3000/123
   @Put(':id')
   async update(@Param('id') id: string, @Body() data: UserDTO) {
