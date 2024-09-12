@@ -23,8 +23,8 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'off',
   },
   settings: {
-    'prettier': {
-      'endOfLine': 'lf'
-    }
-  }
-}
+    prettier: {
+      endOfLine: 'lf',
+    },
+  },
+};
