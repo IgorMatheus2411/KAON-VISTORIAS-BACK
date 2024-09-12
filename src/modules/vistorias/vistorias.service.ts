@@ -9,7 +9,20 @@ export class VistoriaService {
   async createVistoria(data: VistoriaDTO) {
     try {
       const vistoria = await this.prisma.vistoria.create({
-        data,
+        data: {
+          area_vistoriada: data.area_vistoriada,
+          cliente: data.cliente,
+          data_agendamento: new Date(data.data_agendamento), // Converter para Date
+          data_laudo: new Date(data.data_laudo), // Converter para Date
+          endereco: data.endereco,
+          finalizada: data.finalizada,
+          locador: data.locador,
+          locatario: data.locatario,
+          mobiliado: data.mobiliado,
+          tipo_imovel: data.tipo_imovel,
+          tipo_vistoria: data.tipo_vistoria,
+          userId: data.userId,
+        },
       });
 
       return vistoria;
@@ -28,7 +41,7 @@ export class VistoriaService {
     });
   }
 
-  async update(id: string, data: VistoriaDTO) {
+  async update(id: string, data: Partial<VistoriaDTO>) {
     const vistoriaExists = await this.prisma.vistoria.findUnique({
       where: {
         id,

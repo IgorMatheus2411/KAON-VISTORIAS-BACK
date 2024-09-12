@@ -2,8 +2,8 @@ export type VistoriaDTO = {
   id?: string;
   area_vistoriada: string;
   cliente: string;
-  data_agendamento: Date;
-  data_laudo: Date;
+  data_agendamento: Date | string;
+  data_laudo: Date | string;
   endereco: string;
   finalizada: boolean;
   locador: string;
