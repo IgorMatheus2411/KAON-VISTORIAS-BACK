@@ -2,13 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/database/PrismaService';
 import { VistoriaDTO } from './vistoria.dto';
 
+// Define um tipo para campos atualizáveis, excluindo campos que não devem ser atualizados diretamente
 @Injectable()
 export class VistoriaService {
   constructor(private prisma: PrismaService) {}
 
   async createVistoria(data: VistoriaDTO) {
     try {
-      const vistoria = await this.prisma.vistoria.create({
+      return await this.prisma.vistoria.create({
         data: {
           area_vistoriada: data.area_vistoriada,
           cliente: data.cliente,
@@ -24,8 +25,6 @@ export class VistoriaService {
           userId: data.userId,
         },
       });
-
-      return vistoria;
     } catch (error) {
       console.error('Error creating vistoria:', error);
       throw new Error('Error creating vistoria');
@@ -41,21 +40,39 @@ export class VistoriaService {
     });
   }
 
-  async update(id: string, data: Partial<VistoriaDTO>) {
-    const vistoriaExists = await this.prisma.vistoria.findUnique({
+  async findOne(id: string) {
+    return this.prisma.vistoria.findUnique({
       where: {
         id,
       },
+      include: {
+        ambientes: true,
+        sub_ambientes: true,
+      },
+    });
+  }
+
+  async updateVistoria(id: string, data: Partial<VistoriaDTO>) {
+    // Verifica se a vistoria existe
+    const existingVistoria = await this.prisma.vistoria.findUnique({
+      where: { id },
     });
 
-    if (!vistoriaExists) {
+    if (!existingVistoria) {
       throw new Error('Vistoria não existe!');
     }
 
+    // Realiza a atualização somente com os campos fornecidos
     return await this.prisma.vistoria.update({
-      data,
-      where: {
-        id,
+      where: { id },
+      data: {
+        ...data,
+        data_agendamento: data.data_agendamento
+          ? new Date(data.data_agendamento)
+          : existingVistoria.data_agendamento,
+        data_laudo: data.data_laudo
+          ? new Date(data.data_laudo)
+          : existingVistoria.data_laudo,
       },
     });
   }

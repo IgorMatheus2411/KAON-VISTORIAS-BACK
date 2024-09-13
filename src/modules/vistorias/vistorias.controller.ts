@@ -5,10 +5,11 @@ import {
   Get,
   Param,
   Post,
-  Put,
+  Patch,
 } from '@nestjs/common';
 import { VistoriaService } from './vistorias.service';
 import { VistoriaDTO } from './vistoria.dto';
+
 @Controller('vistorias')
 export class VistoriasController {
   constructor(private readonly vistoriaService: VistoriaService) {}
@@ -23,10 +24,17 @@ export class VistoriasController {
     return this.vistoriaService.findAll();
   }
 
-  // http://localhost:3000/123
-  @Put(':id')
-  async update(@Param('id') id: string, @Body() data: VistoriaDTO) {
-    return this.vistoriaService.update(id, data);
+  @Get(':id')
+  async findOne(@Param('id') id: string) {
+    return this.vistoriaService.findOne(id);
+  }
+
+  @Patch(':id')
+  async updateVistoria(
+    @Param('id') id: string,
+    @Body() data: Partial<VistoriaDTO>, // Usa Partial para permitir campos opcionais
+  ) {
+    return this.vistoriaService.updateVistoria(id, data);
   }
 
   @Delete(':id')
