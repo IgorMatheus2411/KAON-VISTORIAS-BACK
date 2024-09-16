@@ -14,6 +14,21 @@ import { UserDTO } from './user.dto';
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
 
+  @Post('login')
+  async login(@Body() userDto: UserDTO) {
+    return this.userService.login(userDto.email, userDto.password);
+  }
+
+  @Post('refresh-token')
+  async refreshAccessToken(@Body('refreshToken') refreshToken: string) {
+    return this.userService.refreshAccessToken(refreshToken);
+  }
+
+  @Post('logout')
+  async logout(@Body('userId') userId: string) {
+    return this.userService.logout(userId);
+  }
+
   @Post()
   async create(@Body() data: UserDTO) {
     return this.userService.createUser(data);

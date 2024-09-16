@@ -12,22 +12,17 @@ export class UsersService {
   constructor(private prisma: PrismaService) {}
 
   async createUser(data: UserDTO) {
-    try {
-      const salt = randomBytes(16).toString('hex');
-      const derivedKey = (await scrypt(data.password, salt, 64)) as Buffer;
-      const hashedPassword = derivedKey.toString('hex');
+    const salt = randomBytes(16).toString('hex');
+    const derivedKey = (await scrypt(data.password, salt, 64)) as Buffer;
+    const hashedPassword = derivedKey.toString('hex');
 
-      const user = await this.prisma.user.create({
-        data: {
-          ...data,
-          password: `${salt}:${hashedPassword}`,
-        },
-      });
-      return user;
-    } catch (error) {
-      console.error('Erro ao criar usuário:', error);
-      throw new Error('Erro ao criar usuário');
-    }
+    const user = await this.prisma.user.create({
+      data: {
+        ...data,
+        password: `${salt}:${hashedPassword}`,
+      },
+    });
+    return user;
   }
 
   async validatePassword(
@@ -39,34 +34,66 @@ export class UsersService {
     return derivedKey.toString('hex') === hashedPassword;
   }
 
-  async login(email: string, password: string): Promise<string> {
-    // Encontrar o usuário pelo email
-    const user = await this.prisma.user.findUnique({
-      where: { email },
-    });
+  async login(
+    email: string,
+    password: string,
+  ): Promise<{ accessToken: string; refreshToken: string }> {
+    const user = await this.prisma.user.findUnique({ where: { email } });
+    if (!user) throw new Error('Usuário não encontrado');
 
-    if (!user) {
-      throw new Error('Usuário não encontrado');
-    }
-
-    // Validar a senha fornecida
     const isValidPassword = await this.validatePassword(
       user.password,
       password,
     );
+    if (!isValidPassword) throw new Error('Senha inválida');
 
-    if (!isValidPassword) {
-      throw new Error('Senha inválida');
+    // Gerar tokens
+    const accessToken = this.generateAccessToken(user);
+    const refreshToken = this.generateRefreshToken(user);
+
+    // Armazenar o refresh token
+    await this.prisma.user.update({
+      where: { id: user.id },
+      data: { refreshToken },
+    });
+
+    return { accessToken, refreshToken };
+  }
+
+  generateAccessToken(user: any): string {
+    return jwt.sign({ id: user.id, email: user.email }, 'seu-segredo-de-jwt', {
+      expiresIn: '15m',
+    });
+  }
+
+  generateRefreshToken(user: any): string {
+    return jwt.sign({ id: user.id, email: user.email }, 'seu-segredo-refresh', {
+      expiresIn: '7d',
+    });
+  }
+
+  async refreshAccessToken(refreshToken: string): Promise<string> {
+    try {
+      const payload = jwt.verify(refreshToken, 'seu-segredo-refresh') as any;
+      const user = await this.prisma.user.findUnique({
+        where: { id: payload.id },
+      });
+
+      if (!user || user.refreshToken !== refreshToken) {
+        throw new Error('Refresh token inválido');
+      }
+
+      return this.generateAccessToken(user);
+    } catch {
+      throw new Error('Erro ao renovar token');
     }
+  }
 
-    // Gerar um token JWT
-    const token = jwt.sign(
-      { id: user.id, email: user.email }, // Payload do token
-      'seu-segredo-de-jwt', // Segredo para assinatura do token (mantenha isso em um ambiente seguro)
-      { expiresIn: '1h' }, // Configuração do tempo de expiração do token
-    );
-
-    return token;
+  async logout(userId: string) {
+    return this.prisma.user.update({
+      where: { id: userId },
+      data: { refreshToken: null },
+    });
   }
 
   async findOne(id: string) {

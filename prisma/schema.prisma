@@ -10,13 +10,14 @@ datasource db {
 // PRISMA KAONVISTORIAS
 
 model User {
-  id        String     @id @default(uuid())
-  name      String
-  email     String     @unique
-  password  String
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  vistorias Vistoria[] // Relacionamento um-para-muitos com Vistorias
+  id           String     @id @default(uuid())
+  name         String
+  email        String     @unique
+  password     String
+  refreshToken String?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  vistorias    Vistoria[] // Relacionamento um-para-muitos com Vistorias
 }
 
 model Vistoria {

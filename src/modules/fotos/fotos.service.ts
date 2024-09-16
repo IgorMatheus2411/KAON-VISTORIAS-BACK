@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { fotosDTO } from './fotos.dto';
+import { FotosDTO } from './fotos.dto';
 import { PrismaService } from 'src/database/PrismaService';
 
 @Injectable()
 export class FotosService {
   constructor(private prisma: PrismaService) {}
 
-  async createFotos(data: fotosDTO) {
+  async createFotos(data: FotosDTO) {
     try {
       const fotos = await this.prisma.foto.create({
         data,
@@ -36,7 +36,7 @@ export class FotosService {
     });
   }
 
-  async updateFotos(id: string, data: fotosDTO) {
+  async updateFotos(id: string, data: FotosDTO) {
     const fotosExists = await this.prisma.ambiente.findUnique({
       where: {
         id,

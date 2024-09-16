@@ -8,14 +8,14 @@ import {
   Put,
 } from '@nestjs/common';
 import { FotosService } from './fotos.service';
-import { fotosDTO } from './fotos.dto';
+import { FotosDTO } from './fotos.dto';
 
 @Controller('fotos')
 export class FotosController {
   constructor(private readonly fotoService: FotosService) {}
 
   @Post()
-  async create(@Body() data: fotosDTO) {
+  async create(@Body() data: FotosDTO) {
     return this.fotoService.createFotos(data);
   }
 
@@ -25,7 +25,7 @@ export class FotosController {
   }
 
   @Put(':id')
-  async update(@Param('id') id: string, @Body() data: fotosDTO) {
+  async update(@Param('id') id: string, @Body() data: FotosDTO) {
     return this.fotoService.updateFotos(id, data);
   }
 
