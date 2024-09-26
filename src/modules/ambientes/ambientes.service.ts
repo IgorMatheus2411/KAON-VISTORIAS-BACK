@@ -31,11 +31,17 @@ export class AmbienteService {
     });
   }
 
-  async updateAbiente(id: string, data: AmbienteDTO) {
-    const ambienteExists = await this.prisma.ambiente.findUnique({
+  async findOne(id: string) {
+    return this.prisma.ambiente.findUnique({
       where: {
         id,
       },
+    });
+  }
+
+  async updateAbiente(id: string, data: Partial<AmbienteDTO>) {
+    const ambienteExists = await this.prisma.ambiente.findUnique({
+      where: { id },
     });
 
     if (!ambienteExists) {

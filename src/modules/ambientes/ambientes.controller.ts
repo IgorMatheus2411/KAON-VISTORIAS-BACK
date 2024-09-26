@@ -4,8 +4,8 @@ import {
   Delete,
   Get,
   Param,
+  Patch,
   Post,
-  Put,
 } from '@nestjs/common';
 import { AmbienteService } from './ambientes.service';
 import { AmbienteDTO } from './ambientes.dto';
@@ -24,9 +24,14 @@ export class AmbientesController {
     return this.ambientesService.findAll();
   }
 
+  @Get(':id')
+  async findOne(@Param('id') id: string) {
+    return this.ambientesService.findOne(id);
+  }
+
   // http://localhost:3000/123
-  @Put(':id')
-  async update(@Param('id') id: string, @Body() data: AmbienteDTO) {
+  @Patch(':id')
+  async update(@Param('id') id: string, @Body() data: Partial<AmbienteDTO>) {
     return this.ambientesService.updateAbiente(id, data);
   }
 
