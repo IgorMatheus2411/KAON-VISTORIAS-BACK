@@ -9,7 +9,20 @@ export class SubAmbienteService {
   async createSubAmbiente(data: SubAmbienteDTO) {
     try {
       const SubAmbiente = await this.prisma.subAmbiente.create({
-        data,
+        data: {
+          nome: data.nome,
+          descricao: data.descricao,
+          ambiente: {
+            connect: {
+              id: data.ambienteId,
+            },
+          },
+          vistoria: {
+            connect: {
+              id: data.vistoriaId, // ID da vistoria a ser conectada
+            },
+          },
+        },
       });
 
       return SubAmbiente;
