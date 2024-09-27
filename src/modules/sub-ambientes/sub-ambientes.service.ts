@@ -36,7 +36,13 @@ export class SubAmbienteService {
     });
   }
 
-  async updateAbiente(id: string, data: SubAmbienteDTO) {
+  async findOne(id: string) {
+    return this.prisma.subAmbiente.findUnique({
+      where: { id },
+    });
+  }
+
+  async updateSubAmbiente(id: string, data: Partial<SubAmbienteDTO>) {
     const SubAmbienteExists = await this.prisma.subAmbiente.findUnique({
       where: {
         id,

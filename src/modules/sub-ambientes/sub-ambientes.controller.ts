@@ -4,13 +4,13 @@ import {
   Delete,
   Get,
   Param,
+  Patch,
   Post,
-  Put,
 } from '@nestjs/common';
 import { SubAmbienteService } from './sub-ambientes.service';
 import { SubAmbienteDTO } from './sub-ambientes.dto';
 
-@Controller('sub-ambientes')
+@Controller('subambientes')
 export class SubAmbientesController {
   constructor(private readonly subAmbientesService: SubAmbienteService) {}
 
@@ -24,10 +24,15 @@ export class SubAmbientesController {
     return this.subAmbientesService.findAll();
   }
 
+  @Get(':id')
+  async findOne(@Param('id') id: string) {
+    return this.subAmbientesService.findOne(id);
+  }
+
   // http://localhost:3000/123
-  @Put(':id')
-  async update(@Param('id') id: string, @Body() data: SubAmbienteDTO) {
-    return this.subAmbientesService.updateAbiente(id, data);
+  @Patch(':id')
+  async update(@Param('id') id: string, @Body() data: Partial<SubAmbienteDTO>) {
+    return this.subAmbientesService.updateSubAmbiente(id, data);
   }
 
   @Delete(':id')

@@ -22,6 +22,7 @@ export class AmbienteService {
   async findAll() {
     return this.prisma.ambiente.findMany({
       include: {
+        subAmbientes: true,
         vistoria: {
           select: {
             cliente: true, // Puxa apenas o campo 'cliente' da vistoria
@@ -36,10 +37,13 @@ export class AmbienteService {
       where: {
         id,
       },
+      include: {
+        subAmbientes: true,
+      },
     });
   }
 
-  async updateAbiente(id: string, data: Partial<AmbienteDTO>) {
+  async updateAmbiente(id: string, data: Partial<AmbienteDTO>) {
     const ambienteExists = await this.prisma.ambiente.findUnique({
       where: { id },
     });

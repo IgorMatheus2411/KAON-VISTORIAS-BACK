@@ -32,7 +32,7 @@ export class AmbientesController {
   // http://localhost:3000/123
   @Patch(':id')
   async update(@Param('id') id: string, @Body() data: Partial<AmbienteDTO>) {
-    return this.ambientesService.updateAbiente(id, data);
+    return this.ambientesService.updateAmbiente(id, data);
   }
 
   @Delete(':id')
