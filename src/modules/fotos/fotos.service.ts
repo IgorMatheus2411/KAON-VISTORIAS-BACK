@@ -36,6 +36,14 @@ export class FotosService {
     });
   }
 
+  async findAllByAmbienteId(id: string) {
+    return this.prisma.foto.findMany({ where: { ambienteId: id } });
+  }
+
+  async findAllBySubAmbienteId(id: string) {
+    return this.prisma.foto.findMany({ where: { subAmbienteId: id } });
+  }
+
   async updateFotos(id: string, data: FotosDTO) {
     const fotosExists = await this.prisma.ambiente.findUnique({
       where: {
