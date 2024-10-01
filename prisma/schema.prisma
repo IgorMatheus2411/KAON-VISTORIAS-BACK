@@ -37,6 +37,7 @@ model Vistoria {
   ambientes        Ambiente[]
   userId           String?
   user             User?         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Foto             Foto[]
 }
 
 model Ambiente {
@@ -63,6 +64,8 @@ model SubAmbiente {
 model Foto {
   id            String       @id @default(uuid())
   url           String // URL da foto no supabase
+  vistoriaId    String
+  vistoria      Vistoria     @relation(fields: [vistoriaId], references: [id], onDelete: Cascade)
   ambienteId    String? // Relacionamento opcional com Ambientes
   subAmbienteId String? // Relacionamento opcional com SubAmbientes
   ambiente      Ambiente?    @relation(fields: [ambienteId], references: [id], onDelete: Cascade)

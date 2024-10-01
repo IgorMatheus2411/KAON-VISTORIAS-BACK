@@ -45,7 +45,7 @@ export class FotosService {
   }
 
   async updateFotos(id: string, data: FotosDTO) {
-    const fotosExists = await this.prisma.ambiente.findUnique({
+    const fotosExists = await this.prisma.foto.findUnique({
       where: {
         id,
       },
@@ -63,7 +63,7 @@ export class FotosService {
     });
   }
 
-  async deletFoto(id: string) {
+  async deleteFoto(id: string) {
     const fotosExists = await this.prisma.foto.findUnique({
       where: {
         id,

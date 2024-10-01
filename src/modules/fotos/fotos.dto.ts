@@ -9,6 +9,10 @@ export class FotosDTO {
   @IsString()
   url: string;
 
+  @IsNotEmpty()
+  @IsString()
+  vistoriaId: string;
+
   @IsOptional()
   @IsString()
   ambienteId?: string;

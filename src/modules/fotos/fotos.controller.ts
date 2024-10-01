@@ -31,6 +31,6 @@ export class FotosController {
 
   @Delete(':id')
   async delete(@Param('id') id: string) {
-    return this.fotoService.deletFoto(id);
+    return this.fotoService.deleteFoto(id);
   }
 }
