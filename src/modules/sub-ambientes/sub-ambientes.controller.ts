@@ -19,9 +19,9 @@ export class SubAmbientesController {
     return this.subAmbientesService.createSubAmbiente(data);
   }
 
-  @Get()
-  async findAll() {
-    return this.subAmbientesService.findAll();
+  @Get(':ambienteId')
+  async getSubAmbienteByAmbienteId(@Param('ambienteId') ambienteId: string) {
+    return this.subAmbientesService.findAll(ambienteId);
   }
 
   @Get(':id')

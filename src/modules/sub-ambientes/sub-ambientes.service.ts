@@ -32,8 +32,11 @@ export class SubAmbienteService {
     }
   }
 
-  async findAll() {
+  async findAll(ambienteId: string) {
     return this.prisma.subAmbiente.findMany({
+      where: {
+        ambienteId: ambienteId,
+      },
       include: {
         fotos: {
           select: {
