@@ -19,8 +19,12 @@ export class AmbienteService {
     }
   }
 
-  async findAll() {
+  async findAll(vistoriaId: string) {
     return this.prisma.ambiente.findMany({
+      where: {
+        vistoriaId: vistoriaId,
+      },
+
       include: {
         subAmbientes: true,
         vistoria: {

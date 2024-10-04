@@ -19,9 +19,9 @@ export class AmbientesController {
     return this.ambientesService.createAmbiente(data);
   }
 
-  @Get()
-  async findAll() {
-    return this.ambientesService.findAll();
+  @Get(':vistoriaId')
+  async getAmbientesByVistoria(@Param('vistoriaId') vistoriaId: string) {
+    return this.ambientesService.findAll(vistoriaId);
   }
 
   @Get(':id')
