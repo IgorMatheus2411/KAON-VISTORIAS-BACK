@@ -12,16 +12,8 @@ export class SubAmbienteService {
         data: {
           nome: data.nome,
           descricao: data.descricao,
-          ambiente: {
-            connect: {
-              id: data.ambienteId,
-            },
-          },
-          vistoria: {
-            connect: {
-              id: data.vistoriaId, // ID da vistoria a ser conectada
-            },
-          },
+          ambienteId: data.ambienteId,
+          vistoriaId: data.vistoriaId,
         },
       });
 
