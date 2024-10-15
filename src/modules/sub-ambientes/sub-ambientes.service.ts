@@ -37,7 +37,12 @@ export class SubAmbienteService {
         },
         ambiente: {
           select: {
-            nome: true, // Puxa apenas o campo 'cliente' da vistoria
+            nome: true,
+          },
+        },
+        vistoria: {
+          select: {
+            cliente: true,
           },
         },
       },
