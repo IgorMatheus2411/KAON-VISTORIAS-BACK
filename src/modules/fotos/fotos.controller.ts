@@ -19,9 +19,9 @@ export class FotosController {
     return this.fotoService.createFotos(data);
   }
 
-  @Get()
-  async findAll() {
-    return this.fotoService.findAll();
+  @Get(':subAmbienteId')
+  async getFotosBySubambienteId(@Param('subAmbienteId') subAmbienteId: string) {
+    return this.fotoService.findAll(subAmbienteId);
   }
 
   @Put(':id')
