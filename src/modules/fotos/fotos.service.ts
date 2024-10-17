@@ -83,4 +83,24 @@ export class FotosService {
       },
     });
   }
+
+  async deleteAllFotosBySubAmbienteId(subAmbienteId: string) {
+    // Verifica se existem fotos associadas ao subambiente
+    const fotos = await this.prisma.foto.findMany({
+      where: {
+        subAmbienteId,
+      },
+    });
+
+    if (fotos.length === 0) {
+      throw new Error('Nenhuma foto encontrada para este subambiente!');
+    }
+
+    // Deleta todas as fotos
+    return await this.prisma.foto.deleteMany({
+      where: {
+        subAmbienteId,
+      },
+    });
+  }
 }

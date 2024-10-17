@@ -33,4 +33,11 @@ export class FotosController {
   async delete(@Param('id') id: string) {
     return this.fotoService.deleteFoto(id);
   }
+
+  @Delete('all/:subAmbienteId')
+  async deleteAllBySubAmbienteId(
+    @Param('subAmbienteId') subAmbienteId: string,
+  ) {
+    return this.fotoService.deleteAllFotosBySubAmbienteId(subAmbienteId);
+  }
 }
