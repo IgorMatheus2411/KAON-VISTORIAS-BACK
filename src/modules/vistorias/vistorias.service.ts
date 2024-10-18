@@ -36,6 +36,7 @@ export class VistoriaService {
       include: {
         ambientes: true,
         sub_ambientes: true,
+        Foto: true,
       },
     });
   }
