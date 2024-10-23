@@ -16,7 +16,12 @@ export class UsersController {
 
   @Post('login')
   async login(@Body() userDto: UserDTO) {
-    return this.userService.login(userDto.email, userDto.password);
+    try {
+      console.log('Login request:', userDto);
+      return await this.userService.loginUser(userDto.email, userDto.password);
+    } catch (error) {
+      console.error('Error during login:', error);
+    }
   }
 
   @Post('refresh-token')
