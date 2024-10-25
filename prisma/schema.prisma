@@ -15,6 +15,7 @@ model User {
   email        String     @unique
   password     String
   refreshToken String?
+  isActive     Boolean    @default(true)
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
   vistorias    Vistoria[] // Relacionamento um-para-muitos com Vistorias
