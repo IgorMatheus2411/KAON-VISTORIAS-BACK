@@ -31,8 +31,11 @@ export class VistoriaService {
     }
   }
 
-  async findAll() {
+  async findAll(userId: string) {
     return this.prisma.vistoria.findMany({
+      where: {
+        userId: userId,
+      },
       include: {
         ambientes: true,
         sub_ambientes: true,

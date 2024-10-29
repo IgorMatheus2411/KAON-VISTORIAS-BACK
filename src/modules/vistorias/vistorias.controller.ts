@@ -19,9 +19,9 @@ export class VistoriasController {
     return this.vistoriaService.createVistoria(data);
   }
 
-  @Get()
-  async findAll() {
-    return this.vistoriaService.findAll();
+  @Get(':userId')
+  async findAll(@Param('userId') userId: string) {
+    return this.vistoriaService.findAll(userId); // Passa o userId para o serviço
   }
 
   @Get(':id')
