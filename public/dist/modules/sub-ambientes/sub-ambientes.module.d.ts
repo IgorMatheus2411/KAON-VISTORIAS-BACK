@@ -1,2 +1,1 @@
-export declare class SubAmbientesModule {
-}
+export declare class SubAmbientesModule {}

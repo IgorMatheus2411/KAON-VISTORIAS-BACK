@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/database/PrismaService';
+import { PrismaService } from '../../database/PrismaService';
 import { VistoriaDTO } from './vistoria.dto';
 
 // Define um tipo para campos atualizáveis, excluindo campos que não devem ser atualizados diretamente

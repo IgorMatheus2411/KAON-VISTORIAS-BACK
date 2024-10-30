@@ -1,2 +1,1 @@
-export declare class FotosModule {
-}
+export declare class FotosModule {}

@@ -1,2 +1,1 @@
-export declare class AmbientesModule {
-}
+export declare class AmbientesModule {}
