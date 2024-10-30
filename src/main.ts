@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
-import { ExpressAdapter } from '@nestjs/platform-express';
 import { AppModule } from './app.module';
-import * as express from 'express'; // Certifique-se de que express está importado corretamente
+import { ExpressAdapter } from '@nestjs/platform-express';
+import express from 'express';
 
 const expressApp = express();
 
@@ -15,13 +15,15 @@ async function bootstrap() {
   // Inicialize o aplicativo
   await app.init();
 
-  // Opcional: Se quiser, adicione middlewares ou outras configurações aqui
+  // Retorne a instância express
+  return expressApp;
 }
 
-// Chame a função de inicialização
-bootstrap();
+// Inicializa o aplicativo
+const appPromise = bootstrap();
 
 // Exporta o manipulador para o Vercel
-export const handler = (req, res) => {
-  expressApp(req, res);
+export const handler = async (req, res) => {
+  const app = await appPromise; // Aguarda a inicialização do aplicativo
+  app(req, res); // Chama o aplicativo NestJS
 };
