@@ -29,9 +29,7 @@ async function bootstrap() {
 }
 
 // Exporte o manipulador para o Vercel
-export const handler = expressApp;
-
-// Chame a função bootstrap
-bootstrap().catch((error) => {
-  console.error('Error starting the application:', error);
-});
+export const handler = async (req, res) => {
+  await bootstrap(); // Certifique-se de que o Nest está inicializado antes de lidar com a solicitação
+  expressApp(req, res); // Passe a requisição e a resposta para o express
+};
