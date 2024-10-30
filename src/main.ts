@@ -15,4 +15,4 @@ async function bootstrap() {
 
 bootstrap();
 
-export const handler = expressApp; // Exporta o adaptador do Express
+export const handler = expressApp;
