@@ -19,17 +19,12 @@ async function bootstrap() {
     app.getHttpAdapter().getInstance().handle(req, res),
   );
 
-  // Inicia o servidor na porta 3000 apenas em ambiente local
-  const port = process.env.PORT || 3000; // Use a porta do ambiente ou 3000
-  if (process.env.VERCEL_ENV !== 'production') {
-    expressApp.listen(port, () => {
-      console.log(`Application is running on: http://localhost:${port}`);
-    });
-  }
+  // Retorna o manipulador express
+  return expressApp;
 }
 
 // Exporte o manipulador para o Vercel
 export const handler = async (req, res) => {
-  await bootstrap(); // Certifique-se de que o Nest está inicializado antes de lidar com a solicitação
-  expressApp(req, res); // Passe a requisição e a resposta para o express
+  const app = await bootstrap(); // Inicializa o Nest
+  app(req, res); // Passa as requisições e respostas para o express
 };
