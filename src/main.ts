@@ -19,12 +19,11 @@ async function bootstrap() {
     app.getHttpAdapter().getInstance().handle(req, res),
   );
 
-  // Retorna o manipulador express
-  return expressApp;
+  return expressApp; // Retorna o manipulador express
 }
 
 // Exporte o manipulador para o Vercel
 export const handler = async (req, res) => {
   const app = await bootstrap(); // Inicializa o Nest
-  app(req, res); // Passa as requisições e respostas para o express
+  return app(req, res); // Passa as requisições e respostas para o express
 };
