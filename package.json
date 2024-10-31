@@ -9,8 +9,8 @@
     "node": "^20.0.0"
   },
   "scripts": {
-    "start": "nest start",
-    "build": "nest build",
+    "start": "node dist/main.js",
+    "build": "tsc",
     "dev": "nodemon src/main.ts",
     "vercel-build": "npm run build && npx prisma migrate deploy",
     "deploy": "vercel --prod",
@@ -32,7 +32,7 @@
     "@nestjs/platform-express": "^10.0.0",
     "@prisma/client": "^5.19.1",
     "@supabase/supabase-js": "^2.45.6",
-    "@vercel/node": "^3.2.23",
+    "@vercel/node": "^2.10.3",
     "bcryptjs": "^2.4.3",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",

@@ -7,9 +7,11 @@
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true, // Adicione esta linha
-    "target": "ES2021",
+    "target": "es6",
     "sourceMap": true,
     "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": true,
     "baseUrl": "./src",
     "incremental": true,
     "skipLibCheck": true,
@@ -18,8 +20,7 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
-    "paths": {
-      "*": ["*", "src/*"] // Isso permitirá o uso de importações como 'src/...'
-    }
-  }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
 }
