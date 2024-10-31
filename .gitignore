@@ -46,8 +46,6 @@ lerna-debug.log*
 .temp
 .tmp
 
-tsconfig.tsbuildinfo
-.vercel
 # Runtime data
 pids
 *.pid
